@@ -9,8 +9,8 @@ public class TicketServiceImpl implements TicketService {
     /**
      * Should only have private methods other than the one below.
      */
-    private static final int PRICEFORADULTS = 25;
-    private static final int PRICEFORKIDS = 15;
+    private static final int PRICE_FOR_ADULTS = 25;
+    private static final int PRICE_FOR_KIDS = 15;
 
     private final TicketPaymentService paymentService;
     private final SeatReservationService seatReservationService;
@@ -57,9 +57,9 @@ public class TicketServiceImpl implements TicketService {
         int totalCost = 0;
         for (TicketTypeRequest request : ticketTypeRequests) {
             if (request.getTicketType() == TicketTypeRequest.Type.ADULT) {
-                totalCost += request.getNoOfTickets() * PRICEFORADULTS;
+                totalCost += request.getNoOfTickets() * PRICE_FOR_ADULTS;
             } else if (request.getTicketType() == TicketTypeRequest.Type.CHILD) {
-                totalCost += request.getNoOfTickets() * PRICEFORKIDS;
+                totalCost += request.getNoOfTickets() * PRICE_FOR_KIDS;
             }
         }
         return totalCost;

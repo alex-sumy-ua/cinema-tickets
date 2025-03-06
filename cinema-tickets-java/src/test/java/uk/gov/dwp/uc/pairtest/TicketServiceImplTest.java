@@ -2,7 +2,6 @@ package uk.gov.dwp.uc.pairtest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import thirdparty.paymentgateway.TicketPaymentService;
 import thirdparty.seatbooking.SeatReservationService;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
@@ -16,8 +15,8 @@ public class TicketServiceImplTest {
     private SeatReservationService seatReservationService;
     private TicketServiceImpl ticketService;
 
-    private static final int PRICEFORADULTS = 25;
-    private static final int PRICEFORKIDS = 15;
+    private static final int PRICE_FOR_ADULTS = 25;
+    private static final int PRICE_FOR_KIDS = 15;
 
     @Before
     public void setUp() {
@@ -37,7 +36,7 @@ public class TicketServiceImplTest {
 
         // Then
         verify(paymentService, times(1))
-                .makePayment(1L, 2 * PRICEFORADULTS + 1 * PRICEFORKIDS); // £65 total
+                .makePayment(1L, 2 * PRICE_FOR_ADULTS + 1 * PRICE_FOR_KIDS); // £65 total
         verify(seatReservationService, times(1))
                 .reserveSeat(1L, 3); // 2 adults + 1 child = 3 seats
     }
@@ -81,7 +80,7 @@ public class TicketServiceImplTest {
 
         // Then
         verify(paymentService, times(1))
-                .makePayment(1L, (3 * PRICEFORADULTS) + (2 * PRICEFORKIDS)); // £105 total
+                .makePayment(1L, (3 * PRICE_FOR_ADULTS) + (2 * PRICE_FOR_KIDS)); // £105 total
     }
 
     @Test
