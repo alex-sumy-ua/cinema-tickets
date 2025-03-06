@@ -62,4 +62,15 @@ public class TicketServiceImpl implements TicketService {
         return totalCost;
     }
 
+    private int calculateTotalSeats(TicketTypeRequest... ticketTypeRequests) {
+        int totalSeats = 0;
+        for (TicketTypeRequest request : ticketTypeRequests) {
+            if (request.getTicketType() == TicketTypeRequest.Type.ADULT ||
+                request.getTicketType() == TicketTypeRequest.Type.CHILD) {
+                totalSeats += request.getNoOfTickets();
+            }
+        }
+        return totalSeats;
+    }
+
 }
