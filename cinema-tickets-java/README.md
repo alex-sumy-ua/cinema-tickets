@@ -15,7 +15,8 @@ This project is a ticket purchasing service for a cinema. It ensures that busine
 ## Tech Stack
 - **Java 11**
 - **Maven**
-- **JUnit 4 + Mockito** (for testing)
+- **JUnit 4 + Mockito** (for testing with simulating external dependencies)
+- **JUnit 4 + Reflection** (for testing private methods)
 
 ## Getting Started
 
@@ -23,13 +24,16 @@ This project is a ticket purchasing service for a cinema. It ensures that busine
 - Java 11+
 - Maven
 
+## Tests JUnit: two kinds have been developed
+- Using Reflection to test the private methods of TicketServiceImpl (pure tests)
+- Using Mockito to test all methods of TicketServiceImpl with simulation of external service dependencies
+
 ## Contacts
 
 ### For any questions, reach out at plachkovskyy@gmail.com
 
-## Next Steps:
-1. **Let’s implement the missing logic in `TicketServiceImpl`!**
-2. **Then we will move on to JUnit testing.**
+## Next Step:
+**Implementation the missing logic in `TicketServiceImpl`!**
 
 ## Installation
 Clone the repository:
