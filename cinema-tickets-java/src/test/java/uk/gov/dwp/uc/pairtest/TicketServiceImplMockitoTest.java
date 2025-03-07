@@ -9,7 +9,7 @@ import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
 import static org.mockito.Mockito.*;
 
-public class TicketServiceImplTest {
+public class TicketServiceImplMockitoTest {
 
     private TicketPaymentService paymentService;
     private SeatReservationService seatReservationService;
