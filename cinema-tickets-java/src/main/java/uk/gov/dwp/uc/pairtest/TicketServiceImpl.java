@@ -5,6 +5,8 @@ import thirdparty.seatbooking.SeatReservationService;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
+import java.util.Arrays;
+
 public class TicketServiceImpl implements TicketService {
     /**
      * Should only have private methods other than the one below.
@@ -22,9 +24,33 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
-        if (!accountIsValid(accountId) ||
-            !ticketRequestIsValid(ticketTypeRequests)) {
-            throw new InvalidPurchaseException();
+//        if (!accountIsValid(accountId) ||
+//            !ticketRequestIsValid(ticketTypeRequests)) {
+//            throw new InvalidPurchaseException();
+//        }
+
+        if (!accountIsValid(accountId)) {
+            throw new InvalidPurchaseException("Invalid account ID. Account ID must be greater than zero.");
+        }
+
+        if (!ticketRequestIsValid(ticketTypeRequests)) {
+            int totalTickets = Arrays.stream(ticketTypeRequests)
+                    .mapToInt(TicketTypeRequest::getNoOfTickets)
+                    .sum();
+
+            boolean hasAdultTicket = Arrays.stream(ticketTypeRequests)
+                    .anyMatch(request -> request.getTicketType() == TicketTypeRequest.Type.ADULT);
+
+            if (!hasAdultTicket) {
+                throw new InvalidPurchaseException("Invalid order. At least one Adult ticket is required.");
+            }
+
+            if (totalTickets > 25) {
+                throw new InvalidPurchaseException("Invalid order. Maximum 25 tickets are allowed per purchase.");
+            }
+
+            // If none of these conditions are met, it's an unexpected state:
+            throw new InvalidPurchaseException("Invalid order. Please check your ticket request details.");
         }
 
         // Continue with payment and seat reservation logic...
