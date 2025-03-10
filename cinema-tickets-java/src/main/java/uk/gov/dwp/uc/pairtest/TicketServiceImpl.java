@@ -24,10 +24,6 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
-//        if (!accountIsValid(accountId) ||
-//            !ticketRequestIsValid(ticketTypeRequests)) {
-//            throw new InvalidPurchaseException();
-//        }
 
         if (!accountIsValid(accountId)) {
             throw new InvalidPurchaseException("Invalid account ID. Account ID must be greater than zero.");
@@ -40,6 +36,10 @@ public class TicketServiceImpl implements TicketService {
 
             boolean hasAdultTicket = Arrays.stream(ticketTypeRequests)
                     .anyMatch(request -> request.getTicketType() == TicketTypeRequest.Type.ADULT);
+
+            if (totalTickets == 0) {
+                throw new InvalidPurchaseException("Invalid order. Order cannot be empty.");
+            }
 
             if (!hasAdultTicket) {
                 throw new InvalidPurchaseException("Invalid order. At least one Adult ticket is required.");
@@ -62,11 +62,19 @@ public class TicketServiceImpl implements TicketService {
 
     }
 
-    private boolean accountIsValid(Long accountId) {
+    private boolean accountIsValid(long accountId) {
+//        if (accountId == null) {
+//            throw new InvalidPurchaseException("Invalid account ID. ID cannot be empty.");
+//        }
         return accountId > 0;
     }
 
     private boolean ticketRequestIsValid(TicketTypeRequest... ticketTypeRequests) {
+
+        if (ticketTypeRequests == null || ticketTypeRequests.length == 0) {
+            return false; // Empty or null array is invalid
+        }
+
         int totalTickets = 0;
         int adultTickets = 0;
 
@@ -76,7 +84,7 @@ public class TicketServiceImpl implements TicketService {
                 adultTickets += request.getNoOfTickets();
             }
         }
-            return adultTickets > 0 && totalTickets <= 25;
+            return totalTickets > 0 && adultTickets > 0 && totalTickets <= 25;
     }
 
     private int calculateTotalPayment(TicketTypeRequest... ticketTypeRequests) {
