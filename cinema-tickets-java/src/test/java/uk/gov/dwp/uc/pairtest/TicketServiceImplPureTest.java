@@ -10,14 +10,10 @@ import thirdparty.seatbooking.SeatReservationServiceImpl;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
-//import org.junit.Rule;
-//import org.junit.rules.ExpectedException;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import static org.junit.Assert.assertThrows;
 
@@ -56,7 +52,6 @@ public class TicketServiceImplPureTest {
         Method method = TicketServiceImpl.class.getDeclaredMethod(methodName, long.class);
         method.setAccessible(true);
         if (object instanceof Long) {
-            // Unboxing Long to primitive long
             return method.invoke(ticketService, (Long) object);
         } else {
             throw new IllegalArgumentException("Invalid argument(s) for method: " + methodName);
@@ -67,12 +62,12 @@ public class TicketServiceImplPureTest {
             throws NoSuchMethodException,
                    IllegalAccessException,
                    InvocationTargetException {
-
         if (requests == null || requests.length == 0) {
             throw new IllegalArgumentException("Invalid request data provided.");
         }
         Method method = TicketServiceImpl.class.getDeclaredMethod(methodName, TicketTypeRequest[].class);
         method.setAccessible(true);
+
         return method.invoke(ticketService, (Object) requests);
     }
 
@@ -109,9 +104,7 @@ public class TicketServiceImplPureTest {
             throws NoSuchMethodException,
                    InvocationTargetException,
                    IllegalAccessException {
-        // Create an order request with only child and infant tickets
         TicketTypeRequest[] requests1 = createOrder(0, 2, 1);
-        // Create an order request with an adult
         TicketTypeRequest[] requests2 = createOrder(2, 1, 1);
 
         assertFalse((boolean) invokePrivateMethodTicketTypeArgument("ticketRequestIsValid", requests1));
@@ -202,7 +195,7 @@ public class TicketServiceImplPureTest {
     }
 
     @Test
-// *Should Throw Exception If No Adult Ticket In Order
+    // *Should Throw Exception If No Adult Ticket In Order
     public void testPurchaseTicketsNoAdult() {
         TicketTypeRequest[] requests = createOrder(0, 2, 1);
 

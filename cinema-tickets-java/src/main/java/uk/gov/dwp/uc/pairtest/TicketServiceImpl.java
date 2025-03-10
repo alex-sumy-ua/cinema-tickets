@@ -63,10 +63,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private boolean accountIsValid(long accountId) {
-//        if (accountId == null) {
-//            throw new InvalidPurchaseException("Invalid account ID. ID cannot be empty.");
-//        }
         return accountId > 0;
+
     }
 
     private boolean ticketRequestIsValid(TicketTypeRequest... ticketTypeRequests) {
@@ -97,6 +95,7 @@ public class TicketServiceImpl implements TicketService {
             }
         }
         return totalCost;
+
     }
 
     private int calculateTotalSeats(TicketTypeRequest... ticketTypeRequests) {
@@ -108,6 +107,7 @@ public class TicketServiceImpl implements TicketService {
             }
         }
         return totalSeats;
+
     }
 
 }
