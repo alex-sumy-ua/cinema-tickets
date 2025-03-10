@@ -10,14 +10,10 @@ import thirdparty.seatbooking.SeatReservationServiceImpl;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
-//import org.junit.Rule;
-//import org.junit.rules.ExpectedException;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import static org.junit.Assert.assertThrows;
 
@@ -56,7 +52,6 @@ public class TicketServiceImplPureTest {
         Method method = TicketServiceImpl.class.getDeclaredMethod(methodName, long.class);
         method.setAccessible(true);
         if (object instanceof Long) {
-            // Unboxing Long to primitive long
             return method.invoke(ticketService, (Long) object);
         } else {
             throw new IllegalArgumentException("Invalid argument(s) for method: " + methodName);
@@ -184,7 +179,6 @@ public class TicketServiceImplPureTest {
         }
     }
 
-
     @Test(expected = InvalidPurchaseException.class)
     // *Ensures that an order with only infant tickets is correctly rejected
     public void testOnlyInfantInOrder() {
@@ -213,8 +207,6 @@ public class TicketServiceImplPureTest {
 
         assertEquals("Invalid order. At least one Adult ticket is required.", exception.getMessage());
     }
-
-
 
     @Test
     // *Ensures that the smallest valid order - one adult ticket - is accepted
