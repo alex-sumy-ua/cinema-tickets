@@ -2,7 +2,7 @@ package uk.gov.dwp.uc.pairtest.exception;
 
 public class InvalidPurchaseException extends RuntimeException {
 
-    public InvalidPurchaseException(String s) {
-        super(s); // Passes the message to the RuntimeException class
+    public InvalidPurchaseException(String message) {
+        super(message); // Passes the message to the RuntimeException class
     }
 }

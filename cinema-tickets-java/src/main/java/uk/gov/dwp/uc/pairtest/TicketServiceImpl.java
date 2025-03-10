@@ -13,6 +13,7 @@ public class TicketServiceImpl implements TicketService {
      */
     private static final int PRICE_FOR_ADULTS = 25;
     private static final int PRICE_FOR_KIDS = 15;
+    private static final int PRICE_FOR_INFANTS = 0;
 
     private final TicketPaymentService paymentService;
     private final SeatReservationService seatReservationService;
